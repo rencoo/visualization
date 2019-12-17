@@ -4,7 +4,7 @@ require('../libs/OrbitControls.js')
 function Control (camera, renderDom) {
     var control = new THREE.OrbitControls(camera, renderDom)
     // control.maxPolarAngle = Math.PI * 0.495
-    control.enableZoom = true
+    // control.enableZoom = true
     control.enablePan = true
     control.autoRotate = true
     control.rotateSpeed = 0.2

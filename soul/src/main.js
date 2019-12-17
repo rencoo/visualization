@@ -19,7 +19,7 @@ window.onload = async function () {
     let data = DATA.marking
 
     var scene = new Scene()
-    // var event = new Event(scene)
+    var event = new Event(scene)
 
     scene.init()
     scene.start()

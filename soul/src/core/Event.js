@@ -1,10 +1,12 @@
 function Event (scene) {
     this.scene = scene
-    this.scene.inits.push(this.init)
+    this.scene.inits.push(this.init.bind(this))
 }
 
 Event.prototype.resizeHandler = function () {
     let scene = this.scene
+    scene.WIDTH = scene.container.offsetWidth || window.innerWidth
+    scene.HEIGHT = scene.container.offsetHeight || window.innerHeight
     scene.renderer.setSize(scene.WIDTH, scene.HEIGHT)
     scene.camera.aspect = scene.WIDTH / scene.HEIGHT
     scene.camera.updateProjectionMatrix();
@@ -15,20 +17,18 @@ Event.prototype.keyHandler = function (e) {
 
     switch (e.keyCode) {
         case 32: // space
-            this.scene.controls.reset()
+            this.scene.control.reset()
             break
         case 88: // x
-            this.scene.controls.autoRotate = !this.scene.controls.autoRotate
+            this.scene.control.autoRotate = !this.scene.control.autoRotate
             break
         default:
     }
 }
 
 Event.prototype.init = function () {
-    var _this = this
-    console.log(this.resizeHandler)
-    // window.addEventListener('keyup', _this.keyHandler.bind(_this), false)
-    // window.addEventListener('resize', _this.resizeHandler.bind(_this), false)
+    window.addEventListener('keyup', this.keyHandler.bind(this), false)
+    window.addEventListener('resize', this.resizeHandler.bind(this), false)
 }
 
 module.exports = Event
