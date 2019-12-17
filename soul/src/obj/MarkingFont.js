@@ -1,4 +1,4 @@
-var $ = require('../libs/jquery.js')
+var $ = require('../libs/jquery.min.js')
 var THREE = require('../libs/three.r86.js')
 
 export default function MarkingFont(options) {
