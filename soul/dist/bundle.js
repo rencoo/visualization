@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/_css-loader@3.3.2@css-loader/dist/runtime/api.js */ \"./node_modules/_css-loader@3.3.2@css-loader/dist/runtime/api.js\");\nexports = module.exports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \"body, html {\\r\\n    padding: 0;\\r\\n    margin: 0;\\r\\n    overflow: hidden;\\r\\n}\\r\\n\\r\\nbody {\\r\\n    background: linear-gradient(#2193b0, #6dd5ed);\\r\\n}\", \"\"]);\n\n\n//# sourceURL=webpack:///./src/css/main.css?./node_modules/_css-loader@3.3.2@css-loader/dist/cjs.js");
+eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/_css-loader@3.3.2@css-loader/dist/runtime/api.js */ \"./node_modules/_css-loader@3.3.2@css-loader/dist/runtime/api.js\");\nexports = module.exports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \"body, html {\\r\\n    padding: 0;\\r\\n    margin: 0;\\r\\n    overflow: hidden;\\r\\n}\\r\\n\\r\\nbody {\\r\\n    background: linear-gradient(#eecda3, #ef629f);\\r\\n}\", \"\"]);\n\n\n//# sourceURL=webpack:///./src/css/main.css?./node_modules/_css-loader@3.3.2@css-loader/dist/cjs.js");
 
 /***/ }),
 
