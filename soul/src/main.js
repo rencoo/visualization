@@ -3,6 +3,8 @@ import './css/main.css'
 
 // 初始化自定义THREE方法
 import './init/THREE.init.js'
+// 导入场景类
+import Scene3D from './init/Scene3D.js'
 
 var TWEEN = require('./libs/tween.js')
 var THREE = require('./libs/three.r86.js')
@@ -23,11 +25,58 @@ function init() {
     WIDTH = window.innerWidth;
     HEIGHT = window.innerHeight;
 
-    // 创建场景, 相机, 渲染器和控制器
+    // 创建3D场景, 相机, 渲染器和控制器
     scene = new Scene3D(WIDTH, HEIGHT)
     camera = scene.camera
     renderer = scene.renderer
     orbitControls = scene.control
+
+    // 在场景中添加雾的效果；样式上使用和背景一样的颜色
+    scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
+
+    // 在HTML创建的容器中添加渲染器的DOM元素
+    container = document.querySelector('body');
+    container.appendChild(renderer.domElement);
+
+    // CSS2DRenderer渲染
+    // renderer2d = new THREE.CSS2DRenderer();
+    // renderer2d.setSize( WIDTH, HEIGHT);
+    // renderer2d.domElement.style.position = 'absolute';
+    // renderer2d.domElement.style.top = 0;
+    // container.appendChild(renderer2d.domElement);
+
+    // // 创建控制器
+    // // 页面中共有Renderer, labelRenderer 两个renderer。一个渲染出canvas, 一个是div。大小相同. 位置重叠，div会在canvas上面显示。
+    // // 所以在(camera, renderer.domElement)中, renderer.domElement会在labelRenderer.domElement下面而导致 controls无法触发。
+    // // 所以要把这个地方换成labelRenderer.domElement或者不写。
+    // // 不写默认是document,会在整个页面触发控制事件,单页满屏的时候没关系,在窗口模式的时候就出现了不理想的情况。
+    // // orbitControls = new THREE.OrbitControls(camera, renderer.domElement); // 这样写 controls无法触发
+    // // orbitControls = new THREE.OrbitControls(camera, renderer2d.domElement);
+    // orbitControls = new THREE.OrbitControls(camera);
+    // // this.orbitControls.maxPolarAngle = Math.PI * 0.495;
+    // // orbitControls.enableZoom = true;
+    // // orbitControls.enablePan = true;
+    // orbitControls.autoRotate = true;
+    // orbitControls.rotateSpeed = 0.2
+    // orbitControls.minDistance = 50;
+    // orbitControls.maxDistance = 2000;
+
+    /* 轨迹球控件 */
+    // controls = new THREE.TrackballControls(camera, renderer.domElement);
+
+    /* 属性参数 */
+    // controls.rotateSpeed = 0.2;// 旋转速度
+    // controls.zoomSpeed = 0.2;// 缩放速度
+    // controls.panSpeed = 0.1;// 平controls
+
+    // controls.staticMoving = false;// 静止移动，为 true 则没有惯性
+    // controls.dynamicDampingFactor = 0.2;// 阻尼系数 越 则滑动越大
+
+    // controls.minDistance = 50; // 最视角
+    // controls.maxDistance = 5000;// 最大视角 Infinity 无穷大
+
+    // 监听屏幕, 缩放屏幕更新相机和渲染器的尺寸
+    window.addEventListener('resize', handleWindowResize, false);
 
     // 添加光源
     createLights();
@@ -61,7 +110,7 @@ function init() {
     markings.children.forEach(marking => {
         new TWEEN.Tween(marking.position)
             .to(marking._pos, 3000)
-            .easing(TWEEN.Easing.Quadratic.InOut).delay(300)
+            .easing(TWEEN.Easing.Quadratic.InOut).delay(1000)
             .onStart(function () {})
             .onUpdate(function () {
             })
@@ -81,115 +130,13 @@ function init() {
     // sphere.add(link); // link 位置相对于其加入的 object
 }
 
-function createScene() {
-
-    // 获得屏幕的宽和高，
-    // 用它们设置相机的纵横比
-    // 还有渲染器的大小
-    HEIGHT = window.innerHeight;
-    WIDTH = window.innerWidth;
-
-    // 创建场景
-    scene = new THREE.Scene();
-
-    // 在场景中添加雾的效果；样式上使用和背景一样的颜色
-    scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
-
-    // 创建相机
-    aspectRatio = WIDTH / HEIGHT;
-    fieldOfView = 60;
-    nearPlane = 1;
-    farPlane = 10000;
-    /**
-     * PerspectiveCamera  透视相机
-     * @param fieldOfView 视角
-     * @param aspectRatio 纵横比
-     * @param nearPlane   近平面
-     * @param farPlane    远平面
-     */
-    camera = new THREE.PerspectiveCamera(
-        fieldOfView,
-        aspectRatio,
-        nearPlane,
-        farPlane,
-    );
-
-    // 设置相机的位置
-    camera.position.x = 0;
-    camera.position.z = 1000;
-    camera.position.y = 0;
-
-    // camera.lookAt( 0, 0, 0 );
-
-    // 创建渲染器
-    renderer = new THREE.WebGLRenderer({
-        // 在 css 中设置背景色透明显示渐变色
-        alpha: true,
-        // 开启抗锯齿，但这样会降低性能。
-        // 不过，由于我们的项目基于低多边形的，那还好 :)
-        antialias: true
-    });
-
-
-    // 定义渲染器的尺寸；在这里它会填满整个屏幕
-    renderer.setSize(WIDTH, HEIGHT);
-
-    // 打开渲染器的阴影地图
-    // renderer.shadowMap.enabled = true;
-    renderer.shadowMapEnabled = true;
-
-    // 在HTML创建的容器中添加渲染器的DOM元素
-    container = document.querySelector('body');
-    container.appendChild(renderer.domElement);
-
-     // CSS2DRenderer渲染
-    renderer2d = new THREE.CSS2DRenderer();
-    renderer2d.setSize( window.innerWidth, window.innerHeight );
-    renderer2d.domElement.style.position = 'absolute';
-    renderer2d.domElement.style.top = 0;
-    container.appendChild(renderer2d.domElement);
-
-    // 创建控制器
-    // 页面中共有Renderer，labelRenderer 两个renderer。一个渲染出canvas，一个是div。大小相同，位置重叠，div会在canvas上面显示。
-    // 所以在(camera，renderer.domElement)中，renderer.domElement会在labelRenderer.domElement下面而导致 controls无法触发。
-    // 所以要把这个地方换成labelRenderer.domElement或者不写。
-    // 不写默认是document，会在整个页面触发控制事件，单页满屏的时候没关系，在窗口模式的时候就出现了不理想的情况。
-    // orbitControls = new THREE.OrbitControls(camera, renderer.domElement); // 这样写 controls无法触发
-    // orbitControls = new THREE.OrbitControls(camera, renderer2d.domElement);
-    orbitControls = new THREE.OrbitControls(camera);
-    // this.orbitControls.maxPolarAngle = Math.PI * 0.495;
-    // orbitControls.enableZoom = true;
-    // orbitControls.enablePan = true;
-    orbitControls.autoRotate = true;
-    orbitControls.rotateSpeed = 0.2
-    orbitControls.minDistance = 50;
-    orbitControls.maxDistance = 2000;
-
-    /* 轨迹球控件 */
-    // controls = new THREE.TrackballControls(camera, renderer.domElement);
-
-    /* 属性参数 */
-    // controls.rotateSpeed = 0.2;// 旋转速度
-    // controls.zoomSpeed = 0.2;// 缩放速度
-    // controls.panSpeed = 0.1;// 平controls
-
-    // controls.staticMoving = false;// 静止移动，为 true 则没有惯性
-    // controls.dynamicDampingFactor = 0.2;// 阻尼系数 越 则滑动越大
-
-    // controls.minDistance = 50; // 最视角
-    // controls.maxDistance = 5000;// 最大视角 Infinity 无穷大
-
-    // 监听屏幕, 缩放屏幕更新相机和渲染器的尺寸
-    window.addEventListener('resize', handleWindowResize, false);
-}
-
 // 由于屏幕的尺寸改变，我们需要更新渲染器的尺寸和相机的纵横比
 function handleWindowResize() {
     // 更新渲染器的高度和宽度以及相机的纵横比
     HEIGHT = window.innerHeight;
     WIDTH = window.innerWidth;
     renderer.setSize(WIDTH, HEIGHT);
-    renderer2d.setSize(WIDTH, HEIGHT);
+    // renderer2d.setSize(WIDTH, HEIGHT);
     camera.aspect = WIDTH/HEIGHT;
     camera.updateProjectionMatrix();
 }
@@ -231,10 +178,10 @@ function createLights() {
 
     // 为了使这些光源呈现效果，只需要将它们添加到场景中
     // scene.add(hemisphereLight);
-    scene.add(shadowLight);
+    // scene.add(shadowLight);
 
     // 环境光源修改场景中的全局颜色和使阴影更加柔和
-    ambientLight = new THREE.AmbientLight(0xdc8874, .5);
+    ambientLight = new THREE.AmbientLight('#000', 1);
     scene.add(ambientLight);
 }
 
@@ -264,7 +211,7 @@ function loop () {
     renderer.render(scene, camera);
 
     // 2D渲染
-    renderer2d.render( scene, camera );
+    // renderer2d.render( scene, camera );
 
     orbitControls.update();
     // controls.update();

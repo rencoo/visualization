@@ -1,7 +1,7 @@
 var THREE = require('../libs/three.r86.js')
 import '../libs/OrbitControls.js'
 
-function Scene3D (w, h) {
+export default function Scene3D (w, h) {
     THREE.Scene.call(this)
 
     // 用于设置相机的横纵比和渲染器的代销
@@ -11,7 +11,7 @@ function Scene3D (w, h) {
     // 创建相机
     this.camera = new Camera(this.WIDTH, this.HEIGHT)
     // 设置相机位置
-    this.camera.position.set(0, 0, 100)
+    this.camera.position.set(0, 0, 1000)
     // 设置相机朝向
     this.camera.lookAt(0, 0, 0)
 
@@ -27,7 +27,7 @@ Scene3D.constructor = Scene3D
 
 // 相机类
 function Camera (w, h) {
-    var fieldOfView = 20
+    var fieldOfView = 60
     var aspectRatio = w / h
     var nearPlane = 1
     var farPlane = 10000
@@ -60,8 +60,10 @@ function Control (camera, renderDom) {
     // control.maxPolarAngle = Math.PI * 0.495
     // control.enableZoom = true
     // control.enablePan = true
-    // control.minDistance = 0
-    control.maxDistance = 420
+    control.autoRotate = true
+    control.rotateSpeed = 0.2
+    control.minDistance = 50;
+    control.maxDistance = 2000
 
     return control
 }
