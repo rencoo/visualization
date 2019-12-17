@@ -1,4 +1,4 @@
-var THREE = require('../libs/three.r86.js')
+var THREE = require('../lib/three.r86.js')
 
 export default function MarkingPoint (options) {
 	options = options || {};

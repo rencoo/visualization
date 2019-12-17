@@ -4,9 +4,10 @@ function Event (scene) {
 }
 
 Event.prototype.resizeHandler = function () {
+    console.log('resize')
     let scene = this.scene
-    scene.WIDTH = scene.container.offsetWidth || window.innerWidth
-    scene.HEIGHT = scene.container.offsetHeight || window.innerHeight
+    scene.WIDTH = window.innerWidth
+    scene.HEIGHT = window.innerHeight
     scene.renderer.setSize(scene.WIDTH, scene.HEIGHT)
     scene.camera.aspect = scene.WIDTH / scene.HEIGHT
     scene.camera.updateProjectionMatrix();

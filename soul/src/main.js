@@ -1,10 +1,10 @@
 'use strict'
 
 // 导入样式
-import './css/main.css'
+import './style/main.css'
 
-var THREE = require('./libs/three.r86.js')
-var TWEEN = require('./libs/tween.js')
+var THREE = require('./lib/three.r86.js')
+var TWEEN = require('./lib/tween.js')
 
 var Scene = require('./core/Scene.js')
 var Event = require('./core/Event.js')
@@ -20,6 +20,10 @@ window.onload = async function () {
 
     var scene = new Scene()
     var event = new Event(scene)
+
+    scene.background = new THREE.Color( '#FFA99F' );
+    // 在场景中添加雾的效果；样式上使用和背景一样的颜色
+    // scene.fog = new THREE.Fog('#FFA99F', 100, 950);
 
     scene.init()
     scene.start()
