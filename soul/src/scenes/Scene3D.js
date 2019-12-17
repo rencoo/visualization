@@ -1,9 +1,14 @@
 var THREE = require('../libs/three.r86.js')
+
+// 初始化一些自定义在THREE上的方法
+require('../init/THREE.init.js')
+
 var Camera = require('./Camera.js')
 var Renderer = require('./Renderer.js')
 var Control = require('./Control.js')
 
-export default function Scene3D (w, h) {
+// 继承自THREE.Scene
+function Scene3D (w, h) {
     THREE.Scene.call(this)
 
     // 用于设置相机的横纵比和渲染器的代销
@@ -21,4 +26,7 @@ export default function Scene3D (w, h) {
 }
 
 Scene3D.prototype = Object.create(THREE.Scene.prototype)
+
 Scene3D.constructor = Scene3D
+
+module.exports = Scene3D

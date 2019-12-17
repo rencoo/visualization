@@ -8,7 +8,8 @@ function Renderer (w, h) {
     })
 
     renderer.setSize(w, h)
-    renderer.shadowMapEnabled = true
+    // renderer.shadowMapEnabled = true
+    renderer.shadowMap.enabled = true
 
     return renderer
 }
