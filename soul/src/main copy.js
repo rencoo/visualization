@@ -1,4 +1,3 @@
-// 导入样式
 import './css/main.css'
 
 // 初始化自定义THREE方法
@@ -7,6 +6,7 @@ import './init/THREE.init.js'
 var TWEEN = require('./libs/tween.js')
 var THREE = require('./libs/three.r86.js')
 
+import './libs/OrbitControls.js'
 import './libs/CSS2DRenderer.js'
 
 import MarkingFont from './obj/MarkingFont.js'
@@ -20,14 +20,8 @@ var scene, camera, fieldOfView, aspectRatio, nearPlane, renderer2d, farPlane, am
 
 window.addEventListener('load', init, false);
 function init() {
-    WIDTH = window.innerWidth;
-    HEIGHT = window.innerHeight;
-
-    // 创建场景, 相机, 渲染器和控制器
-    scene = new Scene3D(WIDTH, HEIGHT)
-    camera = scene.camera
-    renderer = scene.renderer
-    orbitControls = scene.control
+    // 创建场景, 相机和渲染器
+    createScene();
 
     // 添加光源
     createLights();
