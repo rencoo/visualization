@@ -1,6 +1,6 @@
 var THREE = require('../lib/three.r86.js')
 
-export default function MarkingPoint (options) {
+function MarkingPoint (options) {
 	options = options || {};
 	var radius = options.radius || 6;
 	var geometry = new THREE.SphereGeometry(radius, radius, radius);
@@ -14,3 +14,5 @@ export default function MarkingPoint (options) {
 
 	return dot;
 }
+
+module.exports = MarkingPoint

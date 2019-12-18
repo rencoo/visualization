@@ -1,3 +1,4 @@
+'use strict'
 var TWEEN = require('../lib/tween.js')
 var THREE = require('../lib/three.r86.js')
 
@@ -15,7 +16,7 @@ function Scene (el) {
     this.HEIGHT = document.querySelector(el) ? this.container.offsetHeight : window.innerHeight
     // 小窗口缩略图宽高
     this.INSETWIDTH = this.INSETHEIGHT = this.HEIGHT / 4
-    this.position = new THREE.Vector3(0, 0, 0)
+    // this.position = new THREE.Vector3(0, 0, 0)
 
     // 用于初始化事件
     this.inits = []
