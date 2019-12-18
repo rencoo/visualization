@@ -1,6 +1,7 @@
 'use strict'
 const THREE = require('../lib/three.r86')
 
+// 直接使用THREE生成的背景, 不需要加载其他任何数据
 function Background (scene) {
     this.scene = scene
     this.scene.inits.push(this.init.bind(this))

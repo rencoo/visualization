@@ -1,4 +1,5 @@
 'use strict'
+// 事件
 function Event (scene) {
     this.scene = scene
     this.scene.inits.push(this.init.bind(this))

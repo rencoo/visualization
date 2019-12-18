@@ -5,7 +5,6 @@ const TWEEN = require('../../lib/tween.js')
 // 组成对象模型的子模型
 const MarkingPoint = require('../../scenes/MarkingPoint')
 
-// 视图层
 // 将模型数据(javascript对象)渲染成场景视图中的 THREE 物体
 const loadUtil = {
     loadObject (scene, options) {

@@ -7,6 +7,7 @@ require('../lib/lib-init/THREE.init.js')
 
 require('../lib/OrbitControls.js')
 
+// 视图层
 // 继承自THREE.Scene
 function Scene (el) {
     THREE.Scene.call(this)
