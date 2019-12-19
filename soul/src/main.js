@@ -5,6 +5,12 @@ require('./style/main.css')
 // lib
 var THREE = require('./lib/three.r86.js')
 
+require('./lib/OrbitControls.js')
+require('./lib/CSS2DRenderer.js')
+
+// 初始化一些自定义在THREE上的方法
+require('./lib/lib-mixin/THREE.mixin.js')
+
 // core
 var Scene = require('./core/Scene.js')
 var Manage = require('./core/Manage.js')

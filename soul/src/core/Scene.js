@@ -2,25 +2,12 @@
 var TWEEN = require('../lib/tween.js')
 var THREE = require('../lib/three.r86.js')
 
-// 初始化一些自定义在THREE上的方法
-require('../lib/lib-init/THREE.init.js')
-
-require('../lib/OrbitControls.js')
-
 // 视图层
 // 继承自THREE.Scene
-function Scene (el) {
+function Scene () {
     THREE.Scene.call(this)
-
-    this.container = document.querySelector(el) || document.querySelector('body')
-    this.WIDTH = document.querySelector(el) ? this.container.offsetWidth : window.innerWidth
-    this.HEIGHT = document.querySelector(el) ? this.container.offsetHeight : window.innerHeight
-    // 小窗口缩略图宽高
-    this.INSETWIDTH = this.INSETHEIGHT = this.HEIGHT / 4
-    // this.position = new THREE.Vector3(0, 0, 0)
-
-    // 用于初始化事件
-    this.inits = []
+    // 订阅者
+    this.subs = []
 }
 
 Scene.prototype = Object.create(THREE.Scene.prototype)
@@ -28,6 +15,12 @@ Scene.prototype = Object.create(THREE.Scene.prototype)
 Scene.constructor = Scene
 
 Scene.prototype.init = function () {
+    this.WIDTH = window.innerWidth
+    this.HEIGHT = window.innerHeight
+    // 小窗口缩略图宽高
+    this.INSETWIDTH = this.INSETHEIGHT = this.HEIGHT / 4
+    // this.position = new THREE.Vector3(0, 0, 0)
+
     let WIDTH = this.WIDTH, HEIGHT = this.HEIGHT
 
     // create scene, camera, renderer and control
@@ -51,6 +44,12 @@ Scene.prototype.init = function () {
     // renderer.setClearColor('#FF719A', 1)
     this.renderer.shadowMap.enabled = true
 
+    // css2DRenderer
+    this.renderer2d = new THREE.CSS2DRenderer();
+    this.renderer2d.setSize( WIDTH, HEIGHT);
+    this.renderer2d.domElement.style.position = 'absolute';
+    this.renderer2d.domElement.style.top = 0;
+
     // 3.control
     this.control = new THREE.OrbitControls(this.camera, this.renderDom)
     this.control.enablePan = true
@@ -59,11 +58,12 @@ Scene.prototype.init = function () {
     this.control.minDistance = 50
     this.control.maxDistance = 2000
 
-    this.container.appendChild(this.renderer.domElement)
+    document.querySelector('body').appendChild(this.renderer.domElement)
+    document.querySelector('body').appendChild(this.renderer2d.domElement);
 
-    // 初始化事件、
-    this.inits.length && this.inits.forEach(callback => {
-        callback()
+    // 调用其订阅者 manage数据控制层、event事件层、background背景层等的初始化方法
+    this.subs.length && this.subs.forEach(sub => {
+        sub.init()
     })
 }
 
@@ -71,6 +71,7 @@ Scene.prototype.render = function () {
     TWEEN.update()
 
     let renderer = this.renderer, 
+        renderer2d = this.renderer2d,
         camera = this.camera,
         camera2 = this.camera2;
 
@@ -100,6 +101,8 @@ Scene.prototype.render = function () {
     renderer.render(this, camera2);
     // 关闭裁剪，避免裁剪主场景
     renderer.setScissorTest(false); // (*)
+
+    renderer2d.render( this, camera );
 
     this.control.update()
 

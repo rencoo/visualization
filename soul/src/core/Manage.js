@@ -6,11 +6,11 @@ const loadUtil = require('./util/loadUtil.js')
 // 将模型数据渲染成场景视图中的 THREE 物体
 function Manage (scene) {
     this.scene = scene
+    this.scene.subs.push(this)
     // 场景中所有从后端请求的模型数据(javascript对象)集合
     this.models = {
         // "person" : {}
     }
-    this.scene.inits.push(this.init.bind(this))
 }
 
 Manage.prototype.init = function () {

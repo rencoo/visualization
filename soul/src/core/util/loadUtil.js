@@ -4,6 +4,7 @@ const TWEEN = require('../../lib/tween.js')
 
 // 组成对象模型的子模型
 const MarkingPoint = require('../../scenes/MarkingPoint')
+const MarkingFont = require('../../scenes/MarkingFont')
 
 // 将模型数据(javascript对象)渲染成场景视图中的 THREE 物体
 const loadUtil = {
@@ -44,7 +45,7 @@ const loadUtil = {
             // 三维物体需要运动
             if (options.move) {
                 // 经纬度转化成三维坐标
-                var endPos = THREE.getPosition(options.pos[0] + 90, options.pos[1], options.parent_radius)
+                var endPos = THREE.$getPosition(options.pos[0] + 90, options.pos[1], options.parent_radius)
                 object.endPos = endPos
 
                 new TWEEN.Tween(object.position)
@@ -67,11 +68,15 @@ const loadUtil = {
         } else if (options.type === 'person') { // 加载场景中代表person的物体
             var obj = new THREE.Object3D() // 容器
 
+            // 标记点
             var sphere = new MarkingPoint()
-            // 其他需要管联至该对象的三维物体
+            // 其他需要关联至该对象的三维物体
             // ...
-
+            // 标记文字
+            var font = new MarkingFont(options)
+            
             obj.add(sphere)
+            obj.add(font)
             updateObject(obj)
         } else {
 
@@ -80,14 +85,3 @@ const loadUtil = {
 }
 
 module.exports = loadUtil
-
-// // 标记点及标记文字
-// // var fonts = new THREE.Group();
-
-
-// var pos = THREE.getPosition(item.pos[0] + 90, item.pos[1], item.parent_radius);
-// markingPoint._pos = pos;
-// // fonts.add(new MarkingFont(item));
-
-// scene.add(markings);
-// // scene.add(fonts);

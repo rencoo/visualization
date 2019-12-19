@@ -2,7 +2,7 @@
 // 事件
 function Event (scene) {
     this.scene = scene
-    this.scene.inits.push(this.init.bind(this))
+    this.scene.subs.push(this)
 }
 
 Event.prototype.resizeHandler = function () {
@@ -11,8 +11,14 @@ Event.prototype.resizeHandler = function () {
     scene.WIDTH = window.innerWidth
     scene.HEIGHT = window.innerHeight
     scene.renderer.setSize(scene.WIDTH, scene.HEIGHT)
+    scene.renderer2d.setSize(scene.WIDTH, scene.HEIGHT)
     scene.camera.aspect = scene.WIDTH / scene.HEIGHT
-    scene.camera.updateProjectionMatrix();
+    scene.camera.updateProjectionMatrix()
+
+    // 更新用于小视图的副相机
+    scene.INSETWIDTH = scene.INSETHEIGHT = window.innerHeight / 4
+    scene.camera2.aspect = scene.INSETWIDTH / scene.INSETHEIGHT
+    camera2.updateProjectionMatrix()
 }
 
 Event.prototype.keyHandler = function (e) {

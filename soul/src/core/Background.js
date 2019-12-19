@@ -4,7 +4,7 @@ const THREE = require('../lib/three.r86')
 // 直接使用THREE生成的背景, 不需要加载其他任何数据
 function Background (scene) {
     this.scene = scene
-    this.scene.inits.push(this.init.bind(this))
+    this.scene.subs.push(this)
 }
 
 Background.prototype.createLight = function () {
@@ -33,7 +33,7 @@ Background.prototype.createGrid = function () {
 }
 
 Background.prototype.createColor = function () {
-    this.scene.background = new THREE.Color( '#FFA99F' )
+    this.scene.background = new THREE.Color( '#12121F' )
 }
 
 Background.prototype.createFog = function () {
