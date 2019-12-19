@@ -1,4 +1,4 @@
-var THREE = require('../three.r86.js')
+var THREE = require('three')
 
 // 初始化一些自定义方法
 // 经纬度转化成空间三维坐标

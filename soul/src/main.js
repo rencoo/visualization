@@ -3,7 +3,7 @@
 require('./style/main.css')
 
 // lib
-var THREE = require('./lib/three.r86.js')
+var THREE = require('three')
 
 require('./lib/OrbitControls.js')
 require('./lib/CSS2DRenderer.js')

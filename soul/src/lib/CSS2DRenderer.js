@@ -1,7 +1,7 @@
 /**
  * @author mrdoob / http://mrdoob.com/
  */
-var THREE = require('./three.r86.js')
+var THREE = require('three')
 THREE.CSS2DObject = function ( element ) {
 
 	THREE.Object3D.call( this );

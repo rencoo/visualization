@@ -1,6 +1,6 @@
 'use strict'
-var TWEEN = require('../lib/tween.js')
-var THREE = require('../lib/three.r86.js')
+const TWEEN = require('tween.js')
+const THREE = require('three')
 
 // 视图层
 // 继承自THREE.Scene

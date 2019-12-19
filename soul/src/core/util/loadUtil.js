@@ -1,6 +1,6 @@
 'use strict'
-const THREE = require('../../lib/three.r86')
-const TWEEN = require('../../lib/tween.js')
+const THREE = require('three')
+const TWEEN = require('tween.js')
 
 // 组成对象模型的子模型
 const MarkingPoint = require('../../scenes/MarkingPoint')

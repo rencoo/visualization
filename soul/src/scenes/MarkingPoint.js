@@ -1,5 +1,5 @@
 'use strict'
-var THREE = require('../lib/three.r86.js')
+const THREE = require('three')
 
 function MarkingPoint (options) {
 	options = options || {};
